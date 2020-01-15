@@ -26,7 +26,7 @@ export class AuthService {
     return this._user.asObservable().pipe(
       map(user => {
         if (user) {
-          !!user.token;
+          return !!user.token;
         } else {
           return false;
         }

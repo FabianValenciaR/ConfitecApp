@@ -17,8 +17,10 @@ const routes: Routes = [
   {
     path: "indicators",
     loadChildren: () =>
-      import("./indicators/indicators.module").then(m => m.IndicatorsPageModule),
-      canLoad: [AuthGuard]
+      import("./indicators/indicators.module").then(
+        m => m.IndicatorsPageModule
+      ),
+    canLoad: [AuthGuard]
   }
 ];
 
