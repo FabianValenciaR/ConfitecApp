@@ -6,7 +6,6 @@ import { map, tap } from "rxjs/operators";
 import { Plugins } from "@capacitor/core";
 
 import { User } from "./user.model";
-import { parse } from "querystring";
 
 export interface AuthResponseData {
   kind: string;
@@ -139,5 +138,19 @@ export class AuthService {
       key: "userData",
       value: data
     });
+    this.getUserCode(userId).subscribe(response => {
+      let userCode: string = "";
+      userCode = response["fields"]["code"]["stringValue"];
+      Plugins.Storage.set({
+        key: "userCode",
+        value: userCode
+      });
+    });
+  }
+
+  private getUserCode(userId: string) {
+    return this.http.get(
+      `https://firestore.googleapis.com/v1/projects/dev-confitecapp/databases/(default)/documents/Users/${userId}`
+    );
   }
 }
