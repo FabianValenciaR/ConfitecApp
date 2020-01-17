@@ -22,6 +22,7 @@ export interface AuthResponseData {
 })
 export class AuthService {
   private _user = new BehaviorSubject<User>(null);
+  private _userCode = new BehaviorSubject<string>(null);
 
   get userIsAuthenticated() {
     return this._user.asObservable().pipe(
@@ -45,6 +46,22 @@ export class AuthService {
         }
       })
     );
+  }
+
+  get userCode() {
+    return this._userCode.asObservable().pipe(
+      map(user => {
+        if (user) {
+          return user.toString();
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
+  get onMemoryCode() {
+    return Plugins.Storage.get({ key: "userCode" });
   }
 
   constructor(private http: HttpClient) {}
@@ -100,6 +117,7 @@ export class AuthService {
   logout() {
     this._user.next(null);
     Plugins.Storage.remove({ key: "userData" });
+    Plugins.Storage.remove({ key: "userCode" });
   }
 
   private setUserData(userData: AuthResponseData) {
@@ -139,11 +157,10 @@ export class AuthService {
       value: data
     });
     this.getUserCode(userId).subscribe(response => {
-      let userCode: string = "";
-      userCode = response["fields"]["code"]["stringValue"];
+      this._userCode.next(response["fields"]["code"]["stringValue"]);
       Plugins.Storage.set({
         key: "userCode",
-        value: userCode
+        value: response["fields"]["code"]["stringValue"]
       });
     });
   }
