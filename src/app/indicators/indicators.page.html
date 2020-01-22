@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>indicators</ion-title>
+    <ion-title>Indicadores</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,6 +15,16 @@
           <ion-label>Fecha:</ion-label>
           <ion-datetime [max]="this.maxDate.toISOString()"></ion-datetime>
         </ion-item>
+        <app-daily-sales-chart
+          [title]="'Ventas Diarias'"
+          [sold]="400"
+          [remain]="338"
+        ></app-daily-sales-chart>
+        <app-drop-info [title]="'Drop Actual'" [drop]="23"></app-drop-info>
+        <app-effective-visit
+          [title]="'Visita Efectiva'"
+          [visitaEfectiva]=".44"
+        ></app-effective-visit>
       </ion-col>
     </ion-row>
   </ion-grid>

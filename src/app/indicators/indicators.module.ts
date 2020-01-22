@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from "@ionic/angular";
 
-import { IndicatorsPageRoutingModule } from './indicators-routing.module';
+import { IndicatorsPageRoutingModule } from "./indicators-routing.module";
 
-import { IndicatorsPage } from './indicators.page';
+import { IndicatorsPage } from "./indicators.page";
+import { DailySalesChartComponent } from "../components/daily-sales-chart/daily-sales-chart.component";
+import { DropInfoComponent } from "../components/drop-info/drop-info.component";
+import { EffectiveVisitComponent } from "../components/effective-visit/effective-visit.component";
 
 @NgModule({
   imports: [
@@ -15,6 +18,11 @@ import { IndicatorsPage } from './indicators.page';
     IonicModule,
     IndicatorsPageRoutingModule
   ],
-  declarations: [IndicatorsPage]
+  declarations: [
+    IndicatorsPage,
+    DailySalesChartComponent,
+    DropInfoComponent,
+    EffectiveVisitComponent
+  ]
 })
 export class IndicatorsPageModule {}
