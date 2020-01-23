@@ -1,5 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { from } from "rxjs";
+import { switchMap } from "rxjs/operators";
+import { Plugins } from "@capacitor/core";
 
 @Injectable({
   providedIn: "root"
@@ -7,21 +10,21 @@ import { HttpClient } from "@angular/common/http";
 export class IndicatorsService {
   // Server's Host domain
   private API_URI = "http://localhost:3000";
-  token = "";
 
-  constructor(private http: HttpClient,) {
-    this.token = "testToken";
-  }
-
-
+  constructor(private http: HttpClient) {}
 
   // Sends the requests to get all active users from database
   getUsers() {
-    return this.http.get(`${this.API_URI}/api/users/getUsers`, {
-      headers: {
-        authorization: `Bearer ${this.token}`
-      }
-    });
+    return from(Plugins.Storage.get({ key: "userData" })).pipe(
+      switchMap(data => {
+        let token = JSON.parse(data.value).token;
+        return this.http.get(`${this.API_URI}/api/users/getUsers`, {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        });
+      })
+    );
   }
 
   // Sends request to get the total sales

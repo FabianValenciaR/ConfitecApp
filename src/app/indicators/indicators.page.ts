@@ -17,8 +17,6 @@ export class IndicatorsPage implements OnInit {
   }
 
   retrieveUsers() {
-    this.indicatorSvc.getUsers().subscribe(response => {
-      console.log(response);
-    });
+    this.indicatorSvc.getUsers().subscribe(response => {});
   }
 }
