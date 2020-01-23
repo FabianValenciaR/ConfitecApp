@@ -60,6 +60,18 @@ export class AuthService {
     );
   }
 
+  get userToken() {
+    return this._user.asObservable().pipe(
+      map(user => {
+        if (user) {
+          return user.token;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
   get onMemoryCode() {
     return Plugins.Storage.get({ key: "userCode" });
   }
