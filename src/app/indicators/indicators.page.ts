@@ -14,9 +14,30 @@ export class IndicatorsPage implements OnInit {
 
   ionViewWillEnter() {
     this.retrieveUsers();
+    this.retrieveSales();
+    this.retrieveTotalVisits();
+    this.retrieveDrop();
   }
 
   retrieveUsers() {
     this.indicatorSvc.getUsers().subscribe(response => {});
+  }
+
+  retrieveSales() {
+    this.indicatorSvc.getSales("1102126735", "0").subscribe(response => {
+      console.log(response);
+    });
+  }
+
+  retrieveDrop() {
+    this.indicatorSvc.getCurrentDrop("1102126735", "0").subscribe(response => {
+      console.log(response);
+    });
+  }
+
+  retrieveTotalVisits() {
+    this.indicatorSvc.getTotalVisits("1102126735", "0").subscribe(response => {
+      console.log(response);
+    });
   }
 }

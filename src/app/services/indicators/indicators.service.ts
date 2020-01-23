@@ -29,22 +29,52 @@ export class IndicatorsService {
 
   // Sends request to get the total sales
   getSales(userCode: string, daysAgo: string) {
-    return this.http.get(
-      `${this.API_URI}/api/users/getDailyTotalSales/${userCode}/${daysAgo}`
+    return from(Plugins.Storage.get({ key: "userData" })).pipe(
+      switchMap(data => {
+        let token = JSON.parse(data.value).token;
+        return this.http.get(
+          `${this.API_URI}/api/users/getDailyTotalSales/${userCode}/${daysAgo}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          }
+        );
+      })
     );
   }
 
   // Sends request to get the current drop
   getCurrentDrop(userCode: string, daysAgo: string) {
-    return this.http.get(
-      `${this.API_URI}/api/users/getCurrentDrop/${userCode}/${daysAgo}`
+    return from(Plugins.Storage.get({ key: "userData" })).pipe(
+      switchMap(data => {
+        let token = JSON.parse(data.value).token;
+        return this.http.get(
+          `${this.API_URI}/api/users/getCurrentDrop/${userCode}/${daysAgo}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          }
+        );
+      })
     );
   }
 
   //Sends request to get total visits
   getTotalVisits(userCode: string, daysAgo: string) {
-    return this.http.get(
-      `${this.API_URI}/api/users/getEffectiveVisits/${userCode}/${daysAgo}`
+    return from(Plugins.Storage.get({ key: "userData" })).pipe(
+      switchMap(data => {
+        let token = JSON.parse(data.value).token;
+        return this.http.get(
+          `${this.API_URI}/api/users/getEffectiveVisits/${userCode}/${daysAgo}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          }
+        );
+      })
     );
   }
 }
