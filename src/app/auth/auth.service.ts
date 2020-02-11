@@ -60,6 +60,10 @@ export class AuthService {
     );
   }
 
+  get userToken() {
+    return Plugins.Storage.get({ key: "userData" });
+  }
+
   get onMemoryCode() {
     return Plugins.Storage.get({ key: "userCode" });
   }
