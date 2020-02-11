@@ -18,11 +18,14 @@ export class IndicatorsService {
     return from(Plugins.Storage.get({ key: "userData" })).pipe(
       switchMap(data => {
         let token = JSON.parse(data.value).token;
-        return this.http.get(`${this.API_URI}/api/users/getUsers`, {
-          headers: {
-            authorization: `Bearer ${token}`
+        return this.http.get(
+          `https://nfbpnz5bva.execute-api.us-east-1.amazonaws.com/Development`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        });
+        );
       })
     );
   }
@@ -33,10 +36,14 @@ export class IndicatorsService {
       switchMap(data => {
         let token = JSON.parse(data.value).token;
         return this.http.get(
-          `${this.API_URI}/api/users/getDailyTotalSales/${userCode}/${daysAgo}`,
+          `https://cgwpjvxsjc.execute-api.us-east-1.amazonaws.com/Dev`,
           {
             headers: {
               authorization: `Bearer ${token}`
+            },
+            params: {
+              code: userCode,
+              days: daysAgo
             }
           }
         );
@@ -50,10 +57,14 @@ export class IndicatorsService {
       switchMap(data => {
         let token = JSON.parse(data.value).token;
         return this.http.get(
-          `${this.API_URI}/api/users/getCurrentDrop/${userCode}/${daysAgo}`,
+          `https://xfd1tml4hd.execute-api.us-east-1.amazonaws.com/Dev`,
           {
             headers: {
               authorization: `Bearer ${token}`
+            },
+            params: {
+              code: userCode,
+              days: daysAgo
             }
           }
         );
@@ -67,10 +78,14 @@ export class IndicatorsService {
       switchMap(data => {
         let token = JSON.parse(data.value).token;
         return this.http.get(
-          `${this.API_URI}/api/users/getEffectiveVisits/${userCode}/${daysAgo}`,
+          `https://v7rdiy7tsb.execute-api.us-east-1.amazonaws.com/Dev`,
           {
             headers: {
               authorization: `Bearer ${token}`
+            },
+            params: {
+              code: userCode,
+              days: daysAgo
             }
           }
         );
