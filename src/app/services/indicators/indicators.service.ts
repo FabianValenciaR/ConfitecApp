@@ -92,4 +92,25 @@ export class IndicatorsService {
       })
     );
   }
+
+  //Sends request to get the sequence break
+  getSequenceBreak(userCode: string, date: string) {
+    return from(Plugins.Storage.get({ key: "userData" })).pipe(
+      switchMap(data => {
+        let token = JSON.parse(data.value).token;
+        return this.http.get(
+          `https://aml9ms75y2.execute-api.us-east-1.amazonaws.com/Dev`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            },
+            params: {
+              code: userCode,
+              date: date
+            }
+          }
+        );
+      })
+    );
+  }
 }

@@ -93,19 +93,25 @@ export class IndicatorsPage implements OnInit {
       this.userCode,
       `"${this.filterDate.slice(0, 10)}"`
     );
+    const retrieveSequenceBreak = this.indicatorSvc.getSequenceBreak(
+      this.userCode,
+      `"${this.filterDate.slice(0, 10)}"`
+    );
     // Combine all the created requests
     const combinedRequest = zip(
       retrieveUsers,
       retrieveSales,
       retrieveTotalVisits,
-      retrieveDrop
+      retrieveDrop,
+      retrieveSequenceBreak
     );
     // Subscribe to the response of all the observables combined
     combinedRequest.subscribe(
-      ([users, sales, totalVisits, effectiveVisits]) => {
+      ([users, sales, totalVisits, effectiveVisits, sequenceBreak]) => {
         this.totalSales = sales[0];
         this.visitasEfectivas = effectiveVisits[0]["visitasEfectivas"];
         this.visitasTotales = totalVisits[0]["visitasTotales"];
+        console.log(sequenceBreak);
         // Stops the refresh page spinner
         if (event) {
           event.target.complete();
