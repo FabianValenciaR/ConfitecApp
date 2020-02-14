@@ -81,12 +81,18 @@ export class IndicatorsPage implements OnInit {
   getUserData(event?, spinner?: HTMLIonLoadingElement) {
     //Create constast for each Observable request
     const retrieveUsers = this.indicatorSvc.getUsers();
-    const retrieveSales = this.indicatorSvc.getSales(this.userCode, "0");
+    const retrieveSales = this.indicatorSvc.getSales(
+      this.userCode,
+      `"${this.filterDate.slice(0, 10)}"`
+    );
     const retrieveTotalVisits = this.indicatorSvc.getTotalVisits(
       this.userCode,
-      "0"
+      `"${this.filterDate.slice(0, 10)}"`
     );
-    const retrieveDrop = this.indicatorSvc.getCurrentDrop(this.userCode, "0");
+    const retrieveDrop = this.indicatorSvc.getCurrentDrop(
+      this.userCode,
+      `"${this.filterDate.slice(0, 10)}"`
+    );
     // Combine all the created requests
     const combinedRequest = zip(
       retrieveUsers,

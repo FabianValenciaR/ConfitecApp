@@ -31,7 +31,7 @@ export class IndicatorsService {
   }
 
   // Sends request to get the total sales
-  getSales(userCode: string, daysAgo: string) {
+  getSales(userCode: string, date: string) {
     return from(Plugins.Storage.get({ key: "userData" })).pipe(
       switchMap(data => {
         let token = JSON.parse(data.value).token;
@@ -43,7 +43,7 @@ export class IndicatorsService {
             },
             params: {
               code: userCode,
-              days: daysAgo
+              date: date
             }
           }
         );
@@ -52,7 +52,7 @@ export class IndicatorsService {
   }
 
   // Sends request to get the current drop
-  getCurrentDrop(userCode: string, daysAgo: string) {
+  getCurrentDrop(userCode: string, date: string) {
     return from(Plugins.Storage.get({ key: "userData" })).pipe(
       switchMap(data => {
         let token = JSON.parse(data.value).token;
@@ -64,7 +64,7 @@ export class IndicatorsService {
             },
             params: {
               code: userCode,
-              days: daysAgo
+              date: date
             }
           }
         );
@@ -73,7 +73,7 @@ export class IndicatorsService {
   }
 
   //Sends request to get total visits
-  getTotalVisits(userCode: string, daysAgo: string) {
+  getTotalVisits(userCode: string, date: string) {
     return from(Plugins.Storage.get({ key: "userData" })).pipe(
       switchMap(data => {
         let token = JSON.parse(data.value).token;
@@ -85,7 +85,7 @@ export class IndicatorsService {
             },
             params: {
               code: userCode,
-              days: daysAgo
+              date: date
             }
           }
         );
