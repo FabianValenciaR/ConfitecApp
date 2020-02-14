@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { IndicatorsService } from "../services/indicators/indicators.service";
 import { TotalSales } from "../models/TotalSales";
 import { AuthService } from "../auth/auth.service";
+import { zip } from "rxjs";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: "app-indicators",
@@ -11,14 +13,22 @@ import { AuthService } from "../auth/auth.service";
 export class IndicatorsPage implements OnInit {
   constructor(
     private indicatorSvc: IndicatorsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingCtrl: LoadingController
   ) {}
+  // Max Date possible to choose
   maxDate: Date = new Date();
+  // The selected date to filter the user data
   filterDate: string = new Date().toISOString();
+  // Total Sales of a given user
   totalSales: TotalSales = new TotalSales();
+  // Effective visits of a given user
   visitasEfectivas: number = 0;
+  // Total visits of a given user
   visitasTotales: number = 0;
+  // User code used to request specific information to database
   userCode: string = "";
+  // Flag that indicates whether the page is loading
 
   ngOnInit() {}
 
@@ -39,8 +49,28 @@ export class IndicatorsPage implements OnInit {
   ionViewWillEnter() {
     this.authService.onMemoryCode.then(code => {
       this.userCode = `"${code["value"]}"`;
-      this.getUserData();
+      this.presentLoadingSpinner();
     });
+  }
+
+  /**
+   *Creates and present a loading spinner and invokes the getUserData method
+   *
+   * @memberof IndicatorsPage
+   */
+  presentLoadingSpinner() {
+    // Create the spinner
+    this.loadingCtrl
+      .create({
+        message: "Espere por favor...",
+        keyboardClose: true
+      })
+      //Show the spinner
+      .then(loadingEl => {
+        loadingEl.present();
+        // Getting user data
+        this.getUserData(null, loadingEl);
+      });
   }
 
   /**
@@ -48,52 +78,37 @@ export class IndicatorsPage implements OnInit {
    *
    * @memberof IndicatorsPage
    */
-  getUserData() {
-    this.retrieveUsers();
-    this.retrieveSales(this.userCode);
-    this.retrieveTotalVisits(this.userCode);
-    this.retrieveDrop(this.userCode);
-  }
-
-  /**
-   *Get all the active users
-   *
-   * @memberof IndicatorsPage
-   */
-  retrieveUsers() {
-    this.indicatorSvc.getUsers().subscribe(response => {});
-  }
-
-  /**
-   *Get the current sales given a specific userCode and Date
-   *
-   * @memberof IndicatorsPage
-   */
-  retrieveSales(userCode: string) {
-    this.indicatorSvc.getSales(this.userCode, "0").subscribe(response => {
-      this.totalSales = response[0];
-    });
-  }
-
-  /**
-   *Get the current drop given a specific userCode and Date
-   *
-   * @memberof IndicatorsPage
-   */
-  retrieveDrop(iuserCode: string) {
-    this.indicatorSvc.getCurrentDrop(this.userCode, "0").subscribe(response => {
-      this.visitasEfectivas = response[0]["visitasEfectivas"];
-    });
-  }
-
-  /**
-   *Get the total visits given a specific userCode and date
-   *
-   * @memberof IndicatorsPage
-   */
-  retrieveTotalVisits(userCode: string) {
-    this.indicatorSvc.getTotalVisits(this.userCode, "0").subscribe(response => {
-      this.visitasTotales = response[0]["visitasTotales"];
-    });
+  getUserData(event?, spinner?: HTMLIonLoadingElement) {
+    //Create constast for each Observable request
+    const retrieveUsers = this.indicatorSvc.getUsers();
+    const retrieveSales = this.indicatorSvc.getSales(this.userCode, "0");
+    const retrieveTotalVisits = this.indicatorSvc.getTotalVisits(
+      this.userCode,
+      "0"
+    );
+    const retrieveDrop = this.indicatorSvc.getCurrentDrop(this.userCode, "0");
+    // Combine all the created requests
+    const combinedRequest = zip(
+      retrieveUsers,
+      retrieveSales,
+      retrieveTotalVisits,
+      retrieveDrop
+    );
+    // Subscribe to the response of all the observables combined
+    combinedRequest.subscribe(
+      ([users, sales, totalVisits, effectiveVisits]) => {
+        this.totalSales = sales[0];
+        this.visitasEfectivas = effectiveVisits[0]["visitasEfectivas"];
+        this.visitasTotales = totalVisits[0]["visitasTotales"];
+        // Stops the refresh page spinner
+        if (event) {
+          event.target.complete();
+        }
+        // Stops the loading element spinner
+        if (spinner) {
+          spinner.dismiss();
+        }
+      }
+    );
   }
 }

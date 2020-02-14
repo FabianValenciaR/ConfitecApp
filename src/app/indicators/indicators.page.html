@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="getUserData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <ion-grid>
     <ion-row>
       <ion-col size-sm="6" offser-sm="3">
@@ -27,7 +31,10 @@
           [sold]="this.totalSales.sales"
           [remain]="338"
         ></app-daily-sales-chart>
-        <app-drop-info [title]="'Drop Actual'" [drop]="this.totalSales.sales/this.visitasEfectivas"></app-drop-info>
+        <app-drop-info
+          [title]="'Drop Actual'"
+          [drop]="this.totalSales.sales/this.visitasEfectivas"
+        ></app-drop-info>
         <app-effective-visit
           [title]="'Visita Efectiva'"
           [visitaEfectiva]="this.visitasEfectivas/this.visitasTotales"
