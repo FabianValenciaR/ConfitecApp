@@ -38,6 +38,7 @@ export class IndicatorsPage implements OnInit {
    * @memberof IndicatorsPage
    */
   onDateChange() {
+    this.presentLoadingSpinner();
     this.getUserData();
   }
 
@@ -108,10 +109,37 @@ export class IndicatorsPage implements OnInit {
     // Subscribe to the response of all the observables combined
     combinedRequest.subscribe(
       ([users, sales, totalVisits, effectiveVisits, sequenceBreak]) => {
-        this.totalSales = sales[0];
-        this.visitasEfectivas = effectiveVisits[0]["visitasEfectivas"];
-        this.visitasTotales = totalVisits[0]["visitasTotales"];
+        // Check whether sales has a valid value
+        if (sales[0]) {
+          this.totalSales = sales[0];
+        } else {
+          this.totalSales = new TotalSales();
+        }
+        // Check whether effective visits has a valid value
+        if (effectiveVisits[0]["visitasEfectivas"] != 0) {
+          this.visitasEfectivas = effectiveVisits[0]["visitasEfectivas"];
+        } else {
+          this.visitasEfectivas = 0;
+        }
+        // cheks whether total visits has a valid value
+        if (totalVisits[0]["visitasTotales"] != 0) {
+          this.visitasTotales = totalVisits[0]["visitasTotales"];
+        } else {
+          this.visitasTotales = 0;
+        }
+        // sequence break is pending...
         console.log(sequenceBreak);
+        // Stops the refresh page spinner
+        if (event) {
+          event.target.complete();
+        }
+        // Stops the loading element spinner
+        if (spinner) {
+          spinner.dismiss();
+        }
+      },
+      error => {
+        //ERROR HANDLING
         // Stops the refresh page spinner
         if (event) {
           event.target.complete();
