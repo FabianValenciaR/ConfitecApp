@@ -39,7 +39,6 @@ export class IndicatorsPage implements OnInit {
    */
   onDateChange() {
     this.presentLoadingSpinner();
-    this.getUserData();
   }
 
   /**
@@ -48,8 +47,12 @@ export class IndicatorsPage implements OnInit {
    * @memberof IndicatorsPage
    */
   ionViewWillEnter() {
-    this.authService.onMemoryCode.then(code => {
-      this.userCode = `"${code["value"]}"`;
+    this.authService.userData.then(response => {
+      if (!response || response == null) {
+        return;
+      }
+      const userData = JSON.parse(response.value);
+      this.userCode = `"${userData.userId}"`;
       this.presentLoadingSpinner();
     });
   }

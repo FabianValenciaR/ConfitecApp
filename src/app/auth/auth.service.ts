@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment";
 import { BehaviorSubject, from } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { Plugins } from "@capacitor/core";
 
 import { User } from "./user.model";
+import { Auth } from "aws-amplify";
 
 export interface AuthResponseData {
   kind: string;
@@ -60,12 +60,8 @@ export class AuthService {
     );
   }
 
-  get userToken() {
+  get userData() {
     return Plugins.Storage.get({ key: "userData" });
-  }
-
-  get onMemoryCode() {
-    return Plugins.Storage.get({ key: "userCode" });
   }
 
   constructor(private http: HttpClient) {}
@@ -105,43 +101,63 @@ export class AuthService {
     );
   }
 
+  // login(email: string, password: string) {
+  //   return this.http
+  //     .post<AuthResponseData>(
+  //       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseApiKey}`,
+  //       {
+  //         email: email,
+  //         password: password,
+  //         returnSecureToken: true
+  //       }
+  //     )
+  //     .pipe(tap(this.setUserData.bind(this)));
+  // }
+
   login(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseApiKey}`,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
-      .pipe(tap(this.setUserData.bind(this)));
+    return Auth.signIn(email, password).then(response => {
+      if (!response.challengeName) {
+        const userId = response.username;
+        const jwtToken = response.signInUserSession.idToken.jwtToken;
+        const userEmail = response.attributes.email;
+        const expirationDateToken = new Date(
+          new Date().getTime() + 3600 * 1000
+        );
+        this.storeAuthData(
+          userId,
+          jwtToken,
+          expirationDateToken.toISOString(),
+          userEmail
+        );
+      }
+      return response;
+    });
+  }
+
+  completePassword(user: any, password: string, attributes?: any) {
+    return Auth.completeNewPassword(user, password, attributes).then(
+      response => {
+        const userId = response.username;
+        const jwtToken = response.signInUserSession.idToken.jwtToken;
+        const userEmail = attributes.email;
+        const expirationDateToken = new Date(
+          new Date().getTime() + 3600 * 1000
+        );
+        this.storeAuthData(
+          userId,
+          jwtToken,
+          expirationDateToken.toISOString(),
+          userEmail
+        );
+        return response;
+      }
+    );
   }
 
   logout() {
     this._user.next(null);
     Plugins.Storage.remove({ key: "userData" });
     Plugins.Storage.remove({ key: "userCode" });
-  }
-
-  private setUserData(userData: AuthResponseData) {
-    const expirationTime = new Date(
-      new Date().getTime() + +userData.expiresIn * 1000
-    );
-    this._user.next(
-      new User(
-        userData.localId,
-        userData.email,
-        userData.idToken,
-        expirationTime
-      )
-    );
-    this.storeAuthData(
-      userData.localId,
-      userData.idToken,
-      expirationTime.toISOString(),
-      userData.email
-    );
   }
 
   private storeAuthData(
@@ -160,18 +176,5 @@ export class AuthService {
       key: "userData",
       value: data
     });
-    this.getUserCode(userId).subscribe(response => {
-      this._userCode.next(response["fields"]["code"]["stringValue"]);
-      Plugins.Storage.set({
-        key: "userCode",
-        value: response["fields"]["code"]["stringValue"]
-      });
-    });
-  }
-
-  private getUserCode(userId: string) {
-    return this.http.get(
-      `https://firestore.googleapis.com/v1/projects/dev-confitecapp/databases/(default)/documents/Users/${userId}`
-    );
   }
 }

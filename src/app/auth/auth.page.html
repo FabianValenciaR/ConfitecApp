@@ -33,18 +33,59 @@
                 required
               ></ion-input>
             </ion-item>
+            <ion-item *ngIf="this.isNewPasswordRequested">
+              <ion-label position="floating">Nueva contraseña</ion-label>
+              <ion-input
+                type="password"
+                ngModel
+                name="newPassword"
+                required
+              ></ion-input>
+            </ion-item>
+            <ion-item *ngIf="this.isNewPasswordRequested">
+              <ion-label position="floating"
+                >Confirmar nueva contraseña</ion-label
+              >
+              <ion-input
+                type="password"
+                ngModel
+                name="newPasswordConfirm"
+                required
+              ></ion-input>
+            </ion-item>
+            <ion-item *ngIf="this.isNewPasswordRequested">
+              <ion-label position="floating"
+                >Ingrese su e-mail</ion-label
+              >
+              <ion-input
+                type="text"
+                ngModel
+                name="email"
+                required
+              ></ion-input>
+            </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-md="6" offset-md="3">
           <ion-button
+            *ngIf="!this.isNewPasswordRequested"
             type="submit"
             color="primary"
             expand="block"
             [disabled]="!f.valid"
           >
             Iniciar Sesión
+          </ion-button>
+          <ion-button
+            *ngIf="this.isNewPasswordRequested"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+            (click)="onComplete(f)"
+          >
+            Aceptar
           </ion-button>
         </ion-col>
       </ion-row>

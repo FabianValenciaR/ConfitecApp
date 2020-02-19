@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../auth/auth.service";
-import { take, switchMap, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-home",
@@ -16,21 +15,15 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.getUserCode();
-    this.getOnMemoryCode();
   }
 
   getUserCode() {
-    this.authService.userCode.subscribe(response => {
+    this.authService.userData.then(response => {
       if (!response || response == null) {
         return;
       }
-      this.userCode = response;
-    });
-  }
-
-  getOnMemoryCode() {
-    this.authService.onMemoryCode.then(code => {
-      this.userCode = code["value"];
+      const userData = JSON.parse(response.value);
+      this.userCode = userData.userId;
     });
   }
 }

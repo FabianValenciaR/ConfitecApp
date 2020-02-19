@@ -11,6 +11,9 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 import { DailySalesChartComponent } from './components/daily-sales-chart/daily-sales-chart.component';
 
+import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [
@@ -19,9 +22,11 @@ import { DailySalesChartComponent } from './components/daily-sales-chart/daily-s
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AmplifyAngularModule
   ],
   providers: [
+    AmplifyService,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
