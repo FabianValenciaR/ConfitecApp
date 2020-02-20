@@ -11,7 +11,9 @@ import { LoadingController, AlertController } from "@ionic/angular";
 })
 export class AuthPage implements OnInit {
   @ViewChild("f", null) form: NgForm;
-  logoPath: string = "../../assets/confiteca_logo.png";
+  logoPath: string = "./assets/confiteca_logo.png";
+  isNewPasswordRequested: boolean = false;
+  cognitoUser: any;
 
   constructor(
     private authService: AuthService,
@@ -21,6 +23,10 @@ export class AuthPage implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.isNewPasswordRequested = false;
+  }
 
   /**
    * Validate the from and send a specific request
@@ -39,6 +45,22 @@ export class AuthPage implements OnInit {
   }
 
   /**
+   *Validate the completed passwordand send the complete request
+   *
+   * @param {NgForm} form
+   * @returns
+   * @memberof AuthPage
+   */
+  onComplete(form: NgForm) {
+    if (form.value.newPassword !== form.value.newPasswordConfirm) {
+      return;
+    }
+    const newPassword = form.value.newPassword;
+    const email = form.value.email;
+    this.completeNewPassword(this.cognitoUser, newPassword, email);
+  }
+
+  /**
    * Sends the login request to the service and receive the response
    *
    * @param {string} email
@@ -53,29 +75,54 @@ export class AuthPage implements OnInit {
       })
       .then(loadingEl => {
         loadingEl.present();
-        this.authService.login(email, password).subscribe(
-          response => {
-            this.form.reset();
-            this.router.navigateByUrl("/home");
-            loadingEl.dismiss();
-          },
-          error => {
-            this.form.reset();
-            loadingEl.dismiss();
-
-            const code = error.error.error.message;
-            let message =
-              "Ocurrió un problema al iniciar sesión, por favor intente nuevamente.";
-            if (code == "EMAIL_NOT_FOUND") {
-              message = "El correo electrónico ingresado no existe.";
-            } else if (code == "INVALID_PASSWORD") {
-              message = "La contraseña ingresada no es válida.";
-            } else if (code == "USER_DISABLED") {
-              message = "La cuenta ha sido desabilitada por el administrador.";
+        this.authService
+          .login(email, password)
+          .then(response => {
+            if (response.challengeName === "NEW_PASSWORD_REQUIRED") {
+              const header = "Cambio de contraseña requerido";
+              const bodyMessage =
+                "Es necesario cambiar la contraseña para continuar";
+              this.showAlert(header, bodyMessage);
+              this.isNewPasswordRequested = true;
             }
-            this.showAlert(message);
-          }
-        );
+            this.cognitoUser = response;
+            loadingEl.dismiss();
+            this.router.navigateByUrl("/home");
+          })
+          .catch(error => {
+            this.form.reset();
+            loadingEl.dismiss();
+          });
+      });
+  }
+
+  /**
+   *Complete the new password
+   *
+   * @param {string} user
+   * @param {string} password
+   * @param {string} email
+   * @memberof AuthPage
+   */
+  completeNewPassword(user: string, password: string, email: string) {
+    this.loadingCtrl
+      .create({
+        keyboardClose: true,
+        message: "Cambiando contraseña..."
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+        this.authService
+          .completePassword(user, password, {
+            email: email
+          })
+          .then(response => {
+            loadingEl.dismiss();
+            this.router.navigateByUrl("/home");
+          })
+          .catch(error => {
+            loadingEl.dismiss();
+          });
       });
   }
 
@@ -86,10 +133,10 @@ export class AuthPage implements OnInit {
    * @param {string} message
    * @memberof AuthPage
    */
-  private showAlert(message: string) {
+  private showAlert(header: string, message: string) {
     this.alertCtrl
       .create({
-        header: "No se pudo iniciar sesión.",
+        header: header,
         message: message,
         buttons: ["Aceptar"]
       })

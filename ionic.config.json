@@ -1,5 +1,7 @@
 {
   "name": "confitecApp",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
