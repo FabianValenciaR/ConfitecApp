@@ -90,6 +90,10 @@ export class AuthPage implements OnInit {
             this.router.navigateByUrl("/home");
           })
           .catch(error => {
+            const header = "Error al iniciar sesión";
+            const bodyMessage =
+              "El usuario o la contraseña no son válidos, por favor intente nuevamente.";
+            this.showAlert(header, bodyMessage);
             this.form.reset();
             loadingEl.dismiss();
           });
