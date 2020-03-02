@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { IndicatorsService } from "../services/indicators/indicators.service";
-import { TotalSales } from "../models/TotalSales";
 import { AuthService } from "../auth/auth.service";
 import { zip } from "rxjs";
 import { LoadingController } from "@ionic/angular";
+import { UserIndicators } from "../models/UserIndicators";
 
 @Component({
   selector: "app-indicators",
@@ -21,7 +21,7 @@ export class IndicatorsPage implements OnInit {
   // The selected date to filter the user data
   filterDate: string = new Date().toISOString();
   // Total Sales of a given user
-  totalSales: TotalSales = new TotalSales();
+  userIndicators: UserIndicators = new UserIndicators();
   // Effective visits of a given user
   visitasEfectivas: number = 0;
   // Total visits of a given user
@@ -77,62 +77,16 @@ export class IndicatorsPage implements OnInit {
       });
   }
 
-  /**
-   *Get all the data for a specific user
-   *
-   * @memberof IndicatorsPage
-   */
   getUserData(event?, spinner?: HTMLIonLoadingElement) {
-    //Create constast for each Observable request
-    const retrieveUsers = this.indicatorSvc.getUsers();
-    const retrieveSales = this.indicatorSvc.getSales(
+    const retrieveSales = this.indicatorSvc.getIndicators(
       this.userCode,
       `"${this.filterDate.slice(0, 10)}"`
     );
-    const retrieveTotalVisits = this.indicatorSvc.getTotalVisits(
-      this.userCode,
-      `"${this.filterDate.slice(0, 10)}"`
-    );
-    const retrieveDrop = this.indicatorSvc.getCurrentDrop(
-      this.userCode,
-      `"${this.filterDate.slice(0, 10)}"`
-    );
-    const retrieveSequenceBreak = this.indicatorSvc.getSequenceBreak(
-      this.userCode,
-      `"${this.filterDate.slice(0, 10)}"`
-    );
-    // Combine all the created requests
-    const combinedRequest = zip(
-      retrieveUsers,
-      retrieveSales,
-      retrieveTotalVisits,
-      retrieveDrop,
-      retrieveSequenceBreak
-    );
-    // Subscribe to the response of all the observables combined
-    combinedRequest.subscribe(
-      ([users, sales, totalVisits, effectiveVisits, sequenceBreak]) => {
-        // Check whether sales has a valid value
-        if (sales[0]) {
-          this.totalSales = sales[0];
-        } else {
-          this.totalSales = new TotalSales();
-        }
-        // Check whether effective visits has a valid value
-        if (effectiveVisits[0]["visitasEfectivas"] != 0) {
-          this.visitasEfectivas = effectiveVisits[0]["visitasEfectivas"];
-        } else {
-          this.visitasEfectivas = 0;
-        }
-        // cheks whether total visits has a valid value
-        if (totalVisits[0]["visitasTotales"] != 0) {
-          this.visitasTotales = totalVisits[0]["visitasTotales"];
-        } else {
-          this.visitasTotales = 0;
-        }
-        // sequence break is pending...
-        console.log(sequenceBreak);
-        // Stops the refresh page spinner
+    retrieveSales.subscribe(
+      indicators => {
+        this.userIndicators = indicators;
+        console.log(indicators);
+        //Stops the refresh page spinner
         if (event) {
           event.target.complete();
         }
