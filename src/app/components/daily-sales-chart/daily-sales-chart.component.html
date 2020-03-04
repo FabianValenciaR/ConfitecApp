@@ -6,4 +6,12 @@
   <ion-card-content>
     <canvas #ventasDiarias></canvas>
   </ion-card-content>
+  <ion-card-content text-center *ngIf="this.goal - this.sold > 0">
+    Para alcanzar la meta diaria es necesario vender
+    <span class="text-red">{{ this.goal - this.sold | currency }}</span> más!
+  </ion-card-content>
+  <ion-card-content text-center *ngIf="this.goal - this.sold < 0">
+    Felicidades! Haz vendido <span class="text-red">{{ this.sold | currency }}</span> y alcanzado
+    tu meta del día!
+  </ion-card-content>
 </ion-card>

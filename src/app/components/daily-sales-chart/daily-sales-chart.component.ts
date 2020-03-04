@@ -10,7 +10,7 @@ export class DailySalesChartComponent implements OnInit {
   // Receive the variable of the sold amount
   @Input() sold: number = 0;
   // Receive the variable of the remain amount to be sold
-  @Input() remain: number = 0;
+  @Input() goal: number = 0;
   // Receive the title of the Chart
   @Input() title: string = "";
   // Receive tthe subtitle of the chart
@@ -35,14 +35,21 @@ export class DailySalesChartComponent implements OnInit {
    * @memberof DailySalesChartComponent
    */
   showDialySales() {
+    if (this.ventasDiariasChart) {
+      this.ventasDiariasChart.destroy();
+    }
+    let remain = 0;
+    if (this.goal - this.sold > 0) {
+      remain = this.goal - this.sold;
+    }
     this.ventasDiariasChart = new Chart(this.ventasDiarias.nativeElement, {
       type: "doughnut",
       data: {
         labels: ["Vendido", "Restante"],
         datasets: [
           {
-            data: [this.sold, this.remain],
-            backgroundColor: ["rgba(255, 0, 0, 1)", "rgba(255, 0, 0, 0.1)"],
+            data: [this.sold, remain],
+            backgroundColor: ["rgba(226, 33, 38, 1)", "rgba(226, 33, 38, 0.1)"],
             fill: false
           }
         ]

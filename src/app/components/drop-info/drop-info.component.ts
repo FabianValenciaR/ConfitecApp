@@ -10,8 +10,13 @@ export class DropInfoComponent implements OnInit {
   @Input() title: string = "";
   // Receive the subtitle of the chart
   @Input() subtitle: string = "";
-  // Receive the average drop value
-  @Input() drop: number;
+  // Receive the drop goal
+  @Input() dropGoal: number = 30;
+  // Receive the total sales value
+  @Input() totalSales: number = 0;
+  // Receive the effective visits 
+  @Input() effectiveVisits: number = 0;
+
 
   constructor() {}
 

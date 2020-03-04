@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { IndicatorsService } from "../services/indicators/indicators.service";
 import { AuthService } from "../auth/auth.service";
-import { zip } from "rxjs";
 import { LoadingController } from "@ionic/angular";
 import { UserIndicators } from "../models/UserIndicators";
 
@@ -28,7 +27,12 @@ export class IndicatorsPage implements OnInit {
   visitasTotales: number = 0;
   // User code used to request specific information to database
   userCode: string = "";
-  // Flag that indicates whether the page is loading
+  // Stores the monthly user budget goal
+  userBudget: number = 600;
+  // The drop goal
+  dropGoal: number = 30;
+  // The effective visit goal (%)
+  effectiveVisitGoal: number = 0.65;
 
   ngOnInit() {}
 
@@ -85,7 +89,6 @@ export class IndicatorsPage implements OnInit {
     retrieveSales.subscribe(
       indicators => {
         this.userIndicators = indicators;
-        console.log(indicators);
         //Stops the refresh page spinner
         if (event) {
           event.target.complete();

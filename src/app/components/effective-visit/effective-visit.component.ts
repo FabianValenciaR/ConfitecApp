@@ -11,7 +11,11 @@ export class EffectiveVisitComponent implements OnInit {
   // Receive the subtitle of the chart
   @Input() subtitle: string = "";
   // Receive the percent of effective visit
-  @Input() visitaEfectiva: number = 0;
+  @Input() effectiveVisits: number = 0;
+  // Receive the percent of effective visit
+  @Input() totalVisited: number = 0;
+  // Recieve the effective visiter goal (%)
+  @Input() effectiveVisitGoal: number = 0.65;
 
   constructor() {}
 

@@ -29,15 +29,19 @@
         <app-daily-sales-chart
           [title]="'Ventas Diarias'"
           [sold]="this.userIndicators?.sales"
-          [remain]="338"
+          [goal]="this.userBudget"
         ></app-daily-sales-chart>
         <app-drop-info
           [title]="'Drop Actual'"
-          [drop]="this.userIndicators?.sales/this.userIndicators?.effectiveVisits"
+          [dropGoal]="this.dropGoal"
+          [totalSales]="this.userIndicators?.sales"
+          [effectiveVisits]="this.userIndicators?.effectiveVisits"
         ></app-drop-info>
         <app-effective-visit
           [title]="'Visita Efectiva'"
-          [visitaEfectiva]="this.userIndicators?.effectiveVisits/this.userIndicators?.totalVisits"
+          [effectiveVisitGoal]="this.effectiveVisitGoal"
+          [effectiveVisits]="this.userIndicators?.effectiveVisits"
+          [totalVisited]="this.userIndicators?.totalVisits"
         ></app-effective-visit>
       </ion-col>
     </ion-row>
