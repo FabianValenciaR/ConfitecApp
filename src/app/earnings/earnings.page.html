@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" class="menu-button">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title text-center>
+      <div *ngIf="this.selectedTab === 'daily'">
+        Ganancias diarias
+      </div>
+      <div *ngIf="this.selectedTab === 'weekly'">
+        Ganancias semanales
+      </div>
+      <div *ngIf="this.selectedTab === 'monthly'">
+        Ganancias mensuales
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="this.selectedTab === 'daily'">
+    <h3 text-center>Lorem Ipsun</h3>
+  </div>
+  <div *ngIf="this.selectedTab === 'weekly'">WEEKLY</div>
+  <div *ngIf="this.selectedTab === 'monthly'">MONTHLY</div>
+</ion-content>
+
+<!-- Navigation Tabs: Daily, Weekly, Monthly-->
+<div class="tabsEarnings">
+  <button outline ion-row center id="daily" (click)="this.selectTab('daily')">
+    <ion-icon class="tabIcon" name="information-circle"></ion-icon>
+    <br />
+    Diarias
+    <br />
+  </button>
+  <button outline ion-row center id="weekly" (click)="this.selectTab('weekly')">
+    <ion-icon class="tabIcon" name="barcode"></ion-icon>
+    <br />
+    Semanales
+    <br />
+  </button>
+  <button
+    outline
+    ion-row
+    center
+    id="monthly"
+    (click)="this.selectTab('monthly')"
+  >
+    <ion-icon class="tabIcon" name="calendar"></ion-icon>
+    <br />
+    Mensuales
+    <br />
+  </button>
+</div>

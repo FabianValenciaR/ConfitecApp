@@ -1,0 +1,24 @@
+.tabsEarnings {
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  button {
+    /* use width: 23% for 4 buttons, width: 18.2% for 5 buttons */
+    width: 33%;
+    font-size: 15px;
+    height: 70px;
+    background-color: #ffffff;
+    color: #e22126;
+    .tabIcon {
+      /* margin-bottom controls the space between the icons and text */
+      margin-bottom: 3px;
+      font-size: 40px;
+    }
+  }
+  //Style of the active tab selected
+  .active-tab {
+    background-color: #e22126;
+    color: #ffffff;
+    border-radius: 10px;
+  }
+}
