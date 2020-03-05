@@ -19,7 +19,35 @@
 
 <ion-content>
   <div *ngIf="this.selectedTab === 'daily'">
-    <h3 text-center>Lorem Ipsun</h3>
+    <div class="daily-earnings">
+      {{this.dailyEarnings | currency}}
+    </div>
+    <div class="item-card-green">
+      <span>
+        FACTURAS
+      </span>
+      <span>
+        34
+      </span>
+    </div>
+
+    <div class="item-card-blue">
+      <span>
+        EN EFECTIVO
+      </span>
+      <span>
+        28
+      </span>
+    </div>
+
+    <div class="item-card-orange">
+      <span>
+        A CRÉDITO
+      </span>
+      <span>
+        6
+      </span>
+    </div>
   </div>
   <div *ngIf="this.selectedTab === 'weekly'">WEEKLY</div>
   <div *ngIf="this.selectedTab === 'monthly'">MONTHLY</div>

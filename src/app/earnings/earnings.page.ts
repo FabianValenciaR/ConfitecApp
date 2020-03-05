@@ -8,6 +8,7 @@ import { Component, OnInit } from "@angular/core";
 export class EarningsPage implements OnInit {
   // Tab selected by default
   selectedTab: string = "daily";
+  dailyEarnings: number = 65.43;
 
   constructor() {}
 
