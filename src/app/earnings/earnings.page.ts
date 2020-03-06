@@ -19,7 +19,7 @@ export class EarningsPage implements OnInit {
     //Remove all the active classes
     document.getElementById("daily").classList.remove("active-tab");
     document.getElementById("weekly").classList.remove("active-tab");
-    document.getElementById("monthly").classList.remove("active-tab");
+    // document.getElementById("monthly").classList.remove("active-tab");
 
     //Add the active class to the selected tab
     document.getElementById(tab).classList.add("active-tab");
