@@ -22,7 +22,7 @@
     <div class="daily-earnings">
       {{this.dailyEarnings | currency}}
     </div>
-    <div class="item-card-green">
+    <div class="item-card">
       <span>
         FACTURAS
       </span>
@@ -31,7 +31,7 @@
       </span>
     </div>
 
-    <div class="item-card-blue">
+    <div class="item-card">
       <span>
         EN EFECTIVO
       </span>
@@ -40,7 +40,7 @@
       </span>
     </div>
 
-    <div class="item-card-orange">
+    <div class="item-card">
       <span>
         A CRÉDITO
       </span>
@@ -50,7 +50,29 @@
     </div>
   </div>
   <div *ngIf="this.selectedTab === 'weekly'">
-    <app-bar-chart></app-bar-chart>
+    <!--Bar Chart of weekly earnings-->
+    <div class="weekly-chart">
+      <app-bar-chart></app-bar-chart>
+    </div>
+    <!--Weekly Indicators-->
+    <div class="weekly-indicators">
+      <div class="block">
+        <div class="block-title">Total recaudado</div>
+        <div class="block-value">{{2543 | currency}}</div>
+      </div>
+      <div class="block">
+        <div class="block-title">Visitas totales</div>
+        <div class="block-value">204</div>
+      </div>
+      <div class="block">
+        <div class="block-title">Visitas efectivas</div>
+        <div class="block-value">114</div>
+      </div>
+      <div class="block">
+        <div class="block-title">Cobros realizados</div>
+        <div class="block-value">{{1422 |currency}}</div>
+      </div>
+    </div>
   </div>
   <div *ngIf="this.selectedTab === 'monthly'">MONTHLY</div>
 </ion-content>

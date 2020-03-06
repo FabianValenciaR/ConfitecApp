@@ -37,10 +37,10 @@
   font-size: 65px;
 }
 
-.item-card-green {
-  margin: 30px 30px 30px 0px;
-  background-color: #00d68f;
-  color: #f4f4f7;
+.item-card {
+  margin: 30px 30px 30px -4px;
+  border: 4px solid #e22126;
+  color: #5c5e65;
   height: 90px;
   display: flex;
   align-items: center;
@@ -49,26 +49,35 @@
   font-size: 25px;
 }
 
-.item-card-blue {
-  margin: 30px 30px 30px 0px;
-  background-color: #4976de;
-  color: #f4f4f7;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border-radius: 0px 50px 50px 0px;
-  font-size: 25px;
+.weekly-chart {
+  margin: 40px 0px 0px 0px;
 }
 
-.item-card-orange {
-  margin: 30px 30px 30px 0px;
-  background-color: #fa0;
-  color: #f4f4f7;
-  height: 90px;
+.weekly-indicators {
+  margin: 15px 15px 0px 15px;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border-radius: 0px 50px 50px 0px;
-  font-size: 25px;
+  justify-content: space-evenly;
+  flex-flow: wrap;
+}
+
+.block {
+  border: 4px solid;
+  border-color: #e22126;
+  margin: 2.5%;
+  width: 95%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: #5c5e65;
+  border-radius: 10px 10px 40px 9px;
+  .block-title {
+    margin: 0px 5px;
+    font-size: 20px;
+  }
+  .block-value {
+    font-size: 35px;
+    text-decoration: overline;
+  }
 }

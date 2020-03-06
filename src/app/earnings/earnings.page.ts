@@ -25,5 +25,7 @@ export class EarningsPage implements OnInit {
     document.getElementById(tab).classList.add("active-tab");
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    document.getElementById("daily").classList.add("active-tab");
+  }
 }

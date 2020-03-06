@@ -43,7 +43,7 @@ export class BarChartComponent implements OnInit {
           label: "Venta por día",
           data: [504, 345, 656, 765, 97, 767, 0],
           backgroundColor: "#e22126",
-          hoverBackgroundColor: "#66A2EB"
+          hoverBackgroundColor: "#f5b207"
         }
       ]
     };
