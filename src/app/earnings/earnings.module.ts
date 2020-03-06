@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EarningsPageRoutingModule } from './earnings-routing.module';
 
 import { EarningsPage } from './earnings.page';
+import { BarChartComponent } from '../components/bar-chart/bar-chart.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,8 @@ import { EarningsPage } from './earnings.page';
     IonicModule,
     EarningsPageRoutingModule
   ],
-  declarations: [EarningsPage]
+  declarations: [EarningsPage,
+    BarChartComponent
+  ]
 })
 export class EarningsPageModule {}

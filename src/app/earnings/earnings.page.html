@@ -49,7 +49,9 @@
       </span>
     </div>
   </div>
-  <div *ngIf="this.selectedTab === 'weekly'">WEEKLY</div>
+  <div *ngIf="this.selectedTab === 'weekly'">
+    <app-bar-chart></app-bar-chart>
+  </div>
   <div *ngIf="this.selectedTab === 'monthly'">MONTHLY</div>
 </ion-content>
 
