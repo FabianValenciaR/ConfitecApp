@@ -9,14 +9,6 @@ import * as Chart from "chart.js";
 export class BarChartComponent implements OnInit {
   // Receive tthe subtitle of the chart
   @Input() data: number[] = [];
-  // Receive the variable of the sold amount
-  @Input() sold: number = 2000;
-  // Receive the variable of the remain amount to be sold
-  @Input() goal: number = 2043;
-  // Receive the title of the Chart
-  @Input() title: string = "Test Bar Chart";
-  // Receive tthe subtitle of the chart
-  @Input() subtitle: string = "This is a test";
   // References the chart created
   @ViewChild("barChart", null) barChart;
   barChartChart: any;
@@ -37,9 +29,12 @@ export class BarChartComponent implements OnInit {
    * @memberof DailySalesChartComponent
    */
   showDialySales() {
+    // Delete any existing chart
     if (this.barChartChart) {
       this.barChartChart.destroy();
     }
+
+    //Initialize dataset object
     let data = {
       barThickness: 8,
       labels: ["LU", "MA", "MI", "JU", "VI", "SA", "DO"],
@@ -54,12 +49,23 @@ export class BarChartComponent implements OnInit {
     };
 
     this.barChartChart = new Chart(this.barChart.nativeElement, {
+      // Chart Type
       type: "bar",
+      // Dataset
       data: data,
+      // Config options of chart
       options: {
+        // Hide or show leyend of dataset
+        legend: {
+          display: false
+        },
         scales: {
           xAxes: [
             {
+              // Hide X axes grid
+              gridLines: {
+                display: false
+              },
               ticks: {
                 min: 0 // Edit the value according to what you need
               }
@@ -67,6 +73,14 @@ export class BarChartComponent implements OnInit {
           ],
           yAxes: [
             {
+              // Hide Y axis labels
+              ticks: {
+                display: false
+              },
+              // Hide Y axes grid
+              gridLines: {
+                display: false
+              },
               stacked: false
             }
           ]
