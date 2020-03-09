@@ -4,6 +4,10 @@
     <ion-card-title>{{ this.title }}</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-    <h1>{{ this.visitaEfectiva | percent }}</h1>
+    <div class="indicator-container">
+      <h1 class="current-indicator">{{ this.effectiveVisits/this.totalVisited | percent }}</h1>
+      <h1 class="goal-indicator">{{this.effectiveVisitGoal | percent}}</h1>
+    </div>
+    <ion-progress-bar class="indicator-progress-bar" [value]="(this.effectiveVisits/this.totalVisited)/this.effectiveVisitGoal"></ion-progress-bar>
   </ion-card-content>
 </ion-card>

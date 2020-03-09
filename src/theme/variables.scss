@@ -69,3 +69,21 @@
   --ion-toolbar-color: #f4f5f8;
   --ion-toolbar-background: #e22126;
 }
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../assets/fonts/Poppins/Poppins-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: bold;
+  src: url("../assets/fonts/Poppins/Poppins-Bold.ttf");
+}
+
+* {
+  font-family: "Poppins", "Sans-Serif" !important;
+  font-style: normal;
+}

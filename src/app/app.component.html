@@ -3,29 +3,41 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>
-          ConfitecApp
+          Menú
         </ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-list>
-        <ion-menu-toggle>
-          <ion-item lines="none" routerLink="/home">
+      <ion-menu-toggle class="menu-container">
+        <div class="menu-sections">
+          <ion-item
+            color="transparent"
+            class="menu-item"
+            lines="none"
+            routerLink="/home"
+          >
             <ion-icon name="home" slot="start"></ion-icon>
-            <ion-label>Home</ion-label>
+            <ion-label>Inicio</ion-label>
           </ion-item>
 
-          <ion-item lines="none" routerLink="/indicators">
+          <ion-item color="transparent" class="menu-item" lines="none" routerLink="/indicators">
             <ion-icon name="analytics" slot="start"></ion-icon>
             <ion-label>Indicadores</ion-label>
           </ion-item>
 
-          <ion-item lines="none" (click)="onLogout()" button>
+          <ion-item color="transparent" class="menu-item" lines="none" routerLink="/earnings">
+            <ion-icon name="logo-usd" slot="start"></ion-icon>
+            <ion-label>Ganancias</ion-label>
+          </ion-item>
+        </div>
+
+        <div class="menu-logout">
+          <ion-item color="transparent" class="menu-item" lines="none" (click)="onLogout()" button>
             <ion-icon name="log-out" slot="start"></ion-icon>
             <ion-label>Cerrar Sesión</ion-label>
           </ion-item>
-        </ion-menu-toggle>
-      </ion-list>
+        </div>
+      </ion-menu-toggle>
     </ion-content>
   </ion-menu>
   <ion-router-outlet main></ion-router-outlet>

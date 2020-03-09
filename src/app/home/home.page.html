@@ -1,31 +1,32 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" class="menu-button">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title text-center>
       ConfitecApp
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label>{{this.userCode }}</ion-label>
-  </ion-item>
-  <div>
-    Bienvenid@ a ConfitecApp!
+  <div class="welcome-text">
+    Bienvenido a <span id="confitecapp-text">ConfitecApp!</span>
   </div>
-  <div>
-    Esta aplicación ha sido creada con la finalidad ayudar a todos los
-    colaboradores de nuestra familia Confiteca a automatizar procesos internos.
+  <div class="welcome-body-text">
+    Esta aplicación ha sido creada con la finalidad ayudar a la fuerza de ventas
+    de nuestra familia <span id="confiteca-text">Confiteca</span> a mantener
+    control de sus objetivos diarios.
+  </div>
+  <div class="welcome-body-text">
     Actualmente la aplicación está en etapa de desarrollo y pruebas, por lo que
-    podría presentar algunas fallas, seguiremos mejorando la aplicación
+    podría presentar algunos desperfectos, seguiremos mejorando la aplicación
     diariamente!
   </div>
-  <div>
+  <div class="welcome-body-text">
     El éxito de esta herramienta depende de todos, ya que con un buen uso le
-    sacaremos el máximo provecho!
+    sacaremos el máximo provecho y lograremos llevar alegría al alcance de
+    todos!
   </div>
   <div>
     - Fabián Valencia (Analista IT)

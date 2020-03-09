@@ -3,6 +3,7 @@ import { AuthService, AuthResponseData } from "./auth.service";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { LoadingController, AlertController } from "@ionic/angular";
+import { MenuController } from "@ionic/angular";
 
 @Component({
   selector: "app-auth",
@@ -11,7 +12,6 @@ import { LoadingController, AlertController } from "@ionic/angular";
 })
 export class AuthPage implements OnInit {
   @ViewChild("f", null) form: NgForm;
-  logoPath: string = "./assets/confiteca_logo.png";
   isNewPasswordRequested: boolean = false;
   cognitoUser: any;
 
@@ -19,13 +19,20 @@ export class AuthPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private menu: MenuController
+
   ) {}
 
-  ngOnInit() {}
-
-  ionViewWillEnter() {
+  ngOnInit() {
     this.isNewPasswordRequested = false;
+    // Disables the menu
+    this.menu.swipeEnable(false);
+  }
+
+  ngOnDestroy(){
+    // Enables the menu
+    this.menu.swipeEnable(true);
   }
 
   /**

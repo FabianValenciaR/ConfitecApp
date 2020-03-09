@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" class="menu-button">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title text-center>
+      <div *ngIf="this.selectedTab === 'daily'">
+        Ganancias diarias
+      </div>
+      <div *ngIf="this.selectedTab === 'weekly'">
+        Ganancias semanales
+      </div>
+      <div *ngIf="this.selectedTab === 'monthly'">
+        Ganancias mensuales
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="this.selectedTab === 'daily'">
+    <div class="daily-earnings">
+      {{this.dailyEarnings | currency}}
+    </div>
+    <div class="item-card">
+      <span>
+        FACTURAS
+      </span>
+      <span>
+        34
+      </span>
+    </div>
+
+    <div class="item-card">
+      <span>
+        EN EFECTIVO
+      </span>
+      <span>
+        28
+      </span>
+    </div>
+
+    <div class="item-card">
+      <span>
+        A CRÉDITO
+      </span>
+      <span>
+        6
+      </span>
+    </div>
+  </div>
+  <div *ngIf="this.selectedTab === 'weekly'">
+    <!--Bar Chart of weekly earnings-->
+    <div class="weekly-chart">
+      <app-bar-chart></app-bar-chart>
+    </div>
+    <!--Weekly Indicators-->
+    <div class="weekly-indicators">
+      <div class="block">
+        <div class="block-title">Total recaudado</div>
+        <div class="block-value">{{2543 | currency}}</div>
+      </div>
+      <div class="block">
+        <div class="block-title">Visitas totales</div>
+        <div class="block-value">204</div>
+      </div>
+      <div class="block">
+        <div class="block-title">Visitas efectivas</div>
+        <div class="block-value">114</div>
+      </div>
+      <div class="block">
+        <div class="block-title">Cobros realizados</div>
+        <div class="block-value">{{1422 |currency}}</div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="this.selectedTab === 'monthly'">MONTHLY</div>
+</ion-content>
+
+<!-- Navigation Tabs: Daily, Weekly, Monthly-->
+<div class="tabsEarnings">
+  <button outline ion-row center id="daily" (click)="this.selectTab('daily')">
+    <ion-icon class="tabIcon" name="information-circle"></ion-icon>
+    <br />
+    Diarias
+    <br />
+  </button>
+  <button outline ion-row center id="weekly" (click)="this.selectTab('weekly')">
+    <ion-icon class="tabIcon" name="barcode"></ion-icon>
+    <br />
+    Semanales
+    <br />
+  </button>
+  <!-- <button
+    outline
+    ion-row
+    center
+    id="monthly"
+    (click)="this.selectTab('monthly')"
+  >
+    <ion-icon class="tabIcon" name="calendar"></ion-icon>
+    <br />
+    Mensuales
+    <br />
+  </button> -->
+</div>

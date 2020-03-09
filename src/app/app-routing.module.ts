@@ -21,6 +21,12 @@ const routes: Routes = [
         m => m.IndicatorsPageModule
       ),
     canLoad: [AuthGuard]
+  },
+  {
+    path: "earnings",
+    loadChildren: () =>
+      import("./earnings/earnings.module").then(m => m.EarningsPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 

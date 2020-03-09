@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button class="menu-button"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Indicadores</ion-title>
+    <ion-title text-center>Indicadores</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,29 +15,35 @@
   <ion-grid>
     <ion-row>
       <ion-col size-sm="6" offser-sm="3">
-        <ion-item>
+        <ion-item text-center>
           <ion-label>{{this.userIndicators?.name}}</ion-label>
         </ion-item>
-        <ion-item color="primary">
-          <ion-label>Fecha:</ion-label>
-          <ion-datetime
-            [max]="this.maxDate.toISOString()"
-            [(ngModel)]="this.filterDate"
-            (ngModelChange)="this.onDateChange()"
-          ></ion-datetime>
-        </ion-item>
+        <div class="date-picker-container">
+          <ion-item color="transparent">
+            <ion-label> <span style="color: #ffffff"> Fecha:</span></ion-label>
+            <ion-datetime class="date-time-item"
+              [max]="this.maxDate.toISOString()"
+              [(ngModel)]="this.filterDate"
+              (ngModelChange)="this.onDateChange()"
+            ></ion-datetime>
+          </ion-item>
+        </div>
         <app-daily-sales-chart
           [title]="'Ventas Diarias'"
           [sold]="this.userIndicators?.sales"
-          [remain]="338"
+          [goal]="this.userBudget"
         ></app-daily-sales-chart>
         <app-drop-info
           [title]="'Drop Actual'"
-          [drop]="this.userIndicators?.sales/this.userIndicators?.effectiveVisits"
+          [dropGoal]="this.dropGoal"
+          [totalSales]="this.userIndicators?.sales"
+          [effectiveVisits]="this.userIndicators?.effectiveVisits"
         ></app-drop-info>
         <app-effective-visit
           [title]="'Visita Efectiva'"
-          [visitaEfectiva]="this.userIndicators?.effectiveVisits/this.userIndicators?.totalVisits"
+          [effectiveVisitGoal]="this.effectiveVisitGoal"
+          [effectiveVisits]="this.userIndicators?.effectiveVisits"
+          [totalVisited]="this.userIndicators?.totalVisits"
         ></app-effective-visit>
       </ion-col>
     </ion-row>
