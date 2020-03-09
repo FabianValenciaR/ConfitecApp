@@ -11,7 +11,6 @@ import { LoadingController, AlertController } from "@ionic/angular";
 })
 export class AuthPage implements OnInit {
   @ViewChild("f", null) form: NgForm;
-  logoPath: string = "src\assets\confiteca_logo.png";
   isNewPasswordRequested: boolean = false;
   cognitoUser: any;
 
