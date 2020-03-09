@@ -6,6 +6,8 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { AuthService } from "./auth/auth.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { NavController } from '@ionic/angular';
+
 
 @Component({
   selector: "app-root",
@@ -21,7 +23,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    public navCtrl: NavController
   ) {
     this.initializeApp();
   }
@@ -44,6 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.authService.logout();
+    this.navCtrl.navigateRoot('/auth', { replaceUrl: true });
   }
 
   ngOnDestroy() {
