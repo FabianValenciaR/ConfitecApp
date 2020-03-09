@@ -156,7 +156,11 @@ export class AuthService {
 
   logout() {
     this._user.next(null);
-    Auth.signOut();
+    Auth.signOut({ global: true })
+      .then(response => {
+      })
+      .catch(error => {
+      });
     Plugins.Storage.clear();
   }
 
