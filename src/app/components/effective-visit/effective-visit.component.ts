@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
+import { UserIndicators } from "src/app/models/UserIndicators";
 
 @Component({
   selector: "app-effective-visit",
@@ -16,6 +17,8 @@ export class EffectiveVisitComponent implements OnInit {
   @Input() totalVisited: number = 0;
   // Recieve the effective visiter goal (%)
   @Input() effectiveVisitGoal: number = 0.65;
+  // Recieve all the user indicators
+  @Input() userIndicators: UserIndicators = new UserIndicators();
 
   constructor() {}
 
