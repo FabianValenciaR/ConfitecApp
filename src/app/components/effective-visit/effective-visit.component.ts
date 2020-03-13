@@ -11,10 +11,6 @@ export class EffectiveVisitComponent implements OnInit {
   @Input() title: string = "";
   // Receive the subtitle of the chart
   @Input() subtitle: string = "";
-  // Receive the percent of effective visit
-  @Input() effectiveVisits: number = 0;
-  // Receive the percent of effective visit
-  @Input() totalVisited: number = 0;
   // Recieve the effective visiter goal (%)
   @Input() effectiveVisitGoal: number = 0.65;
   // Recieve all the user indicators
@@ -23,4 +19,8 @@ export class EffectiveVisitComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  ngOnChanges() {
+    console.log(this.userIndicators);
+  }
 }
