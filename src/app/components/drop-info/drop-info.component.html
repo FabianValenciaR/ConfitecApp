@@ -6,13 +6,56 @@
   <ion-card-content>
     <div class="indicator-container">
       <h1 class="current-indicator">
-        {{ this.totalSales / this.effectiveVisits | currency }}
+        {{
+          this.userIndicators.sales / this.userIndicators.effectiveVisits
+            | currency
+        }}
       </h1>
       <h1 class="goal-indicator">{{ this.dropGoal | currency }}</h1>
     </div>
     <ion-progress-bar
       class="indicator-progress-bar"
-      [value]="this.totalSales / this.effectiveVisits / this.dropGoal"
+      [value]="
+        this.userIndicators.sales /
+        this.userIndicators.effectiveVisits /
+        this.dropGoal
+      "
     ></ion-progress-bar>
+  </ion-card-content>
+
+  <!-- If there are some remaining visits of the route leave this message-->
+  <ion-card-content
+    *ngIf="
+      this.userIndicators.totalCustomers - this.userIndicators.totalVisits > 0
+    "
+  >
+    Necesitas vender en >las siguientes
+    <span class="text-red">{{
+      this.userIndicators.totalCustomers - this.userIndicators.totalVisits
+    }}</span>
+    tiendas
+    <span class="text-red">{{ this.salesToGoal | currency }} </span> para
+    alcanzar el objetivo diario!
+  </ion-card-content>
+
+  <!-- Show this message if the goal has been achieved -->
+  <ion-card-content
+    *ngIf="
+      this.userIndicators.sales / this.userIndicators.effectiveVisits >= 30
+    "
+  >
+    Felicidades estás alcanzado el objetivo diario!
+  </ion-card-content>
+
+  <!--Show this message when the total visited is greater than the total customers-->
+  <ion-card-content
+    *ngIf="
+      this.userIndicators.totalVisits >= this.userIndicators.totalCustomers &&
+      this.userIndicators.sales / this.userIndicators.effectiveVisits < 30
+    "
+  >
+    Necesitas vender
+    <span class="text-red">{{ this.salesToGoal | currency }}</span> en tu
+    siguiente visita para alcanzar el objetivo diario!
   </ion-card-content>
 </ion-card>

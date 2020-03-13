@@ -5,13 +5,15 @@ export class UserIndicators {
   totalVisits: number;
   effectiveVisits: number;
   sequenceBreak: number;
+  totalCustomers: number;
   constructor(
     code?: string,
     name?: string,
     sales?: number,
     totalVisits?: number,
     effectiveVisits?: number,
-    sequenceBreak?: number
+    sequenceBreak?: number,
+    totalCustomers?: number
   ) {
     this.code = !code ? "" : this.code;
     this.name = !name ? "" : this.name;
@@ -19,5 +21,6 @@ export class UserIndicators {
     this.totalVisits = !totalVisits ? 0 : this.totalVisits;
     this.effectiveVisits = !effectiveVisits ? 0 : this.effectiveVisits;
     this.sequenceBreak = !sequenceBreak ? 0 : this.sequenceBreak;
+    this.totalCustomers = !totalCustomers ? 0 : this.totalCustomers;
   }
 }
