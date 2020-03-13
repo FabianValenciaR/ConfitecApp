@@ -81,6 +81,13 @@ export class IndicatorsPage implements OnInit {
       });
   }
 
+  /**
+   *Gets the user data
+   *
+   * @param {*} [event]
+   * @param {HTMLIonLoadingElement} [spinner]
+   * @memberof IndicatorsPage
+   */
   getUserData(event?, spinner?: HTMLIonLoadingElement) {
     const retrieveSales = this.indicatorSvc.getIndicators(
       this.userCode,
